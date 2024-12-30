@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: maxence <maxence@student.42.fr>            +#+  +:+       +#+         #
+#    By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 15:53:44 by mgendrot          #+#    #+#              #
-#    Updated: 2024/12/27 14:58:59 by maxence          ###   ########.fr        #
+#    Updated: 2024/12/30 13:10:41 by mgendrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,7 @@ CFLAGS      = -Wall -Wextra -Werror
 RM          = rm -f
 MKDIR       = mkdir
 
-LIBFT_DIR       = $(TMP)libft/
 
-LIBFT           = libft.a
-LIBFT_INC_H       =  include/libft.h
-LIBFT_GIT	   	=  https://github.com/maxg56/libft.git
 
 
 # **************************************************************************** #
@@ -52,8 +48,7 @@ TERM_CLEAR_LINE     =   \033[2K\r
 #                                   Sources                                    #
 # **************************************************************************** #
 
-SRC_FILES       =   main pipex_error pipex_execution pipex_structure  \
-					pipex_pathing  pipex_parsing pipex_here_doc
+SRC_FILES       =   main init  utils 
 
 SRC_DIR         = src/
 
@@ -93,36 +88,10 @@ endef
 all: lib $(NAME) 
 	@printf "$(GREEN)All targets compiled successfully!$(DEF_COLOR)\n"
 
-# **************************************************************************** #
-#                                   libift                                     #
-# **************************************************************************** #
 
-cleanlibs:
-	@$(MAKE) clean -C $(LIBFT_DIR)	-s
-	
-fcleanlibs:
-	@$(MAKE) fclean -C $(LIBFT_DIR) -s
-	@$(RM) $(LIBFT)
-	@$(RM) $(LIBFT_INC_H)
-	@$(RM) -fr $(LIBFT_DIR)
-
-lib : $(LIBFT)
-	@cp -u $(LIBFT_DIR)/$(LIBFT_INC_H) $(INCLUDE)
-
-$(LIBFT):
-	@if [ ! -d "$(LIBFT_DIR)/.git" ]; then \
-		printf "$(TERM_YELLOW)Cloning third party library \"%s\" in \"%s\"...\n$(DEF_COLOR)" $(LIBFT_GIT) $(LIBFT_PATH);\
-		git clone $(LIBFT_GIT) $(LIBFT_DIR) ;\
-	fi
-	@printf "$(MAGENTA)Making archive $(TERM_BLUE)\"%s\"$(MAGENTA)...$(DEF_COLOR)\n" $@
-	@$(MAKE) -C $(LIBFT_DIR) -s
-	@cp $(LIBFT_DIR)/$(LIBFT) ./ 
-	@printf "$(TERM_CLEAR_LINE)$(GREEN)Done copying archive $(BLUE)\"%s\"$(DEF_COLOR) !\n$(TERM_RESET)" $@
-
-relibft: fcleanlibs libft
 
 # **************************************************************************** #
-#                                   Pipex                                      #
+#                                 Philosophers                                 #
 # **************************************************************************** #
 
 $(NAME): $(OBJ)
