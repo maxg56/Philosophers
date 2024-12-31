@@ -6,7 +6,7 @@
 #    By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 15:53:44 by mgendrot          #+#    #+#              #
-#    Updated: 2024/12/30 13:10:41 by mgendrot         ###   ########.fr        #
+#    Updated: 2024/12/31 15:10:22 by mgendrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME        = philosophers
 
-INCLUDE     = include
+INCLUDE     = include/
 
 TMP 	   = .tmp/
 CC          = cc 
@@ -48,7 +48,7 @@ TERM_CLEAR_LINE     =   \033[2K\r
 #                                   Sources                                    #
 # **************************************************************************** #
 
-SRC_FILES       =   main init  utils 
+SRC_FILES       =   main init  utils Erore
 
 SRC_DIR         = src/
 
@@ -85,7 +85,7 @@ endef
 #                                   Rules                                      #
 # **************************************************************************** #
 
-all: lib $(NAME) 
+all: $(NAME) 
 	@printf "$(GREEN)All targets compiled successfully!$(DEF_COLOR)\n"
 
 

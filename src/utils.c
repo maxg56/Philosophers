@@ -6,11 +6,11 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:10:09 by mgendrot          #+#    #+#             */
-/*   Updated: 2024/12/30 20:41:44 by mgendrot         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:10:05 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../innclude/philosophers.h"
 
 int	ft_atoi(const char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 19:19:14 by mgendrot          #+#    #+#             */
-/*   Updated: 2024/12/30 20:36:12 by mgendrot         ###   ########.fr       */
+/*   Updated: 2024/12/31 15:00:41 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exit_error(char *message)
 
 void	error(char *message)
 {
-	ft_dprintf(2, RED"Error:\n%s\n"DEF_COLOR, message);
+	printf(RED"Error:\n%s\n"DEF_COLOR, message);
 }
 
 
