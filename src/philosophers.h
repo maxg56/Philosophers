@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:59:10 by maxence           #+#    #+#             */
-/*   Updated: 2024/12/30 20:42:03 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/01 14:59:41 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,22 @@
 
 # define RED "\033[0;31m"
 # define DEF_COLOR "\033[0m"
+# define PHILO_MAX 300
 
+# define MIN_ARGS 5
+# define MAX_ARGS 6
+
+typedef enum e_error
+{
+	ERR_INVALID_PHILOS_NUM,
+	ERR_INVALID_TIME_TO_DIE,
+	ERR_INVALID_TIME_TO_EAT,
+	ERR_INVALID_TIME_TO_SLEEP,
+	ERR_INVALID_NUM_MEALS,
+	ERR_WRONG_ARG_COUNT
+}	t_error;
+
+const char	*get_error_message(t_error err);
 
 typedef struct s_philo
 {
@@ -59,8 +74,8 @@ t_data	*get_var_data(void);
 
 int		ft_isdigit(int character);
 int		ft_atoi(const char *str);
-void	exit_error(char *message);
-void	error(char *message);
+void	exit_error(t_error *message);
+void	error(t_error *message);
 void	free_data(t_data *data);
 
 #endif
