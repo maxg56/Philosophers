@@ -6,85 +6,84 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:10:21 by mgendrot          #+#    #+#             */
-/*   Updated: 2024/12/30 14:08:49 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/02 14:30:49 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../innclude/philo.h"
 
-t_data	*get_var_data(void)
-{
-	static t_data	*data = NULL;
 
-	if (!data)
-	{
-		data = malloc(sizeof(t_data));
-		if (!data)
-			return (NULL);
-	}
-	data->philos = NULL;
-	return (data);
-}
 
-static t_data	*init_data(void)
-{
-	t_data	*data;
-
-	data = get_var_data();
-	data->nb_philo = 0;
-	data->time_to_die = 0;
-	data->time_to_eat = 0;
-	data->time_to_sleep = 0;
-	data->nb_must_eat = -1;
-	data->start_time = 0;
-	data->forks = NULL;
-	data->someone_died = 0;
-	data->philos = NULL;
-	return (data);
-}
-
-static t_philo	init_philo(int id, t_data *data)
-{
-	t_philo	*philo;
-
-	philo = malloc(sizeof(t_philo));
-	if (!philo)
-		return (NULL);
-	philo->id = id;
-	philo->meals_eaten = 0;
-	philo->last_meal_time = 0;
-	philo->left_fork = NULL;
-	philo->right_fork = NULL;
-	philo->data = data;
-	return (philo);
-}
-
-static void	init_philos(t_data *data)
+static int	init_mutex(t_data *data)
 {
 	int	i;
 
-	i = 0;
-	data->philos = malloc(sizeof(t_philo) * data->nb_philo);
-	while (i < data->nb_philo)
+	i = -1;
+	data->fork = malloc(sizeof(t_fork) * data->philo_count);
+	if (!data->fork)
+		return (print_error("Malloc failed.", 1));
+	while (++i < data->philo_count)
 	{
-		data->philos[i] = init_philo(i, data);
-		if (!data->philos[i])
-			return ;
-		i++;
+		if (pthread_mutex_init(&data->fork[i].mutex, NULL))
+			return (print_error("Mutex initialization failed.", 1));
+		data->fork[i].taken_by = 0;
 	}
+	return (init_gen_mutex(data));
 }
 
-t_data	*get_data(int argc, char **argv)
+static int	init_gen_mutex(t_data *data)
 {
-	t_data	*data;
+	if (pthread_mutex_init(&data->m_meal, NULL))
+		return (print_error("Mutex initialization failed.", 1));
+	if (pthread_mutex_init(&data->m_write, NULL))
+		return (print_error("Mutex initialization failed.", 1));
+	if (pthread_mutex_init(&data->m_dead, NULL))
+		return (print_error("Mutex initialization failed.", 1));
+	if (pthread_mutex_init(&data->m_fork, NULL))
+		return (print_error("Mutex initialization failed.", 1));
+	if (pthread_mutex_init(&data->m_win, NULL))
+		return (print_error("Mutex initialization failed.", 1));
+	if (pthread_mutex_init(&data->m_t_eat, NULL))
+		return (print_error("Mutex initialization failed.", 1));
+	return (1);
+}
 
-	data = init_data();
-	data->nb_philo = ft_atoi(argv[1]);
-	init_philos(data);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->nb_must_eat = ft_atoi(argv[5]);
-	return (data);
+static int	init_philo(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	data->philo = malloc(sizeof(t_philo) * data->philo_count);
+	if (!data->philo)
+		return (print_error("Error: Memory allocation error.", 1));
+	while (++i < data->philo_count)
+	{
+		data->philo[i].id = i + 1;
+		data->philo[i].times_eat = 0;
+		data->philo[i].right = i;
+		data->philo[i].left = (i + 1) % data->philo_count;
+		data->philo[i].last_meal = 0;
+		data->philo[i].data = data;
+	}
+	return (1);
+}
+
+int	init_data(t_data *data, int argc, char **argv)
+{
+	data->philo_count = ft_atoi(argv[1]);
+	data->die_time = ft_atoi(argv[2]);
+	data->eat_time = ft_atoi(argv[3]);
+	data->sleep_time = ft_atoi(argv[4]);
+	data->max_eat = -1;
+	if (argc == MAX_ARGS)
+		data->max_eat = ft_atoi(argv[5]);
+	data->died = 0;
+	data->win = 0;
+	if (data->philo_count < 1 || data->die_time < 0 || data->eat_time < 0
+		|| data->sleep_time < 0 || (argc == MAX_ARGS && data->max_eat < 1)
+		|| data->sleep_time >= INT_MAX || data->die_time >= INT_MAX
+		|| data->eat_time >= INT_MAX
+		|| (argc == MAX_ARGS && data->max_eat >= INT_MAX))
+		return (print_error("Error: Argument error.", -1));
+	return (init_mutex(data) * init_philo(data));
 }
