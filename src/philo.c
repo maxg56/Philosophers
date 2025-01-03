@@ -6,20 +6,20 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:35:03 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/02 14:36:29 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:57:38 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../innclude/philo.h"
+#include "../include/philo.h"
 
-void	release_fork(t_fork *fork)
+static void	release_fork(t_fork *fork)
 {
 	pthread_mutex_lock(&fork->mutex);
 	fork->taken_by = 0;
 	pthread_mutex_unlock(&fork->mutex);
 }
 
-int	take_fork(t_philo *philo, t_fork *fork)
+static int	take_fork(t_philo *philo, t_fork *fork)
 {
 	pthread_mutex_lock(&fork->mutex);
 	if (!fork->taken_by)

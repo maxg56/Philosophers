@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:59:10 by maxence           #+#    #+#             */
-/*   Updated: 2025/01/02 14:42:08 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/03 15:04:47 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 # define MIN_ARGS 5
 # define MAX_ARGS 6
-
+# define UNLIMITED_MEALS -1
 
 
 typedef struct s_fork
@@ -68,28 +68,20 @@ typedef struct s_data
 	t_fork				*fork;
 }						t_data;
 
-t_data	*get_data(int argc, char **argv);
-t_data	*get_var_data(void);
+int			print_error(char *str, int i);
+void		print(t_data *data, int id, char *str);
 
-// utils
+long int	get_time(void);
+void		*thread(void *var);
+void		*thread_1(void *var);
 
-int		ft_isdigit(int character);
-int				ft_atoi( const char *str);
-int				print_error(char *str, int i);
-long int		get_time(void);
-long int		now(t_philo *philo);
-void			*thread(void *var);
-void			*thread_1(void *var);
-int				init_data(t_data *data, int argc, char **argv);
-void			print(t_data *data, int id, char *str);
-int				check_died(t_data *data);
-int				check_win(t_data *data);
-void			start_thread(t_data *data);
-void			smart_sleep(long int time, t_data *data);
-int				is_reached_max_eat(t_philo *philo);
-void			win_checker(t_data *data);
-void			death_checker(t_data *data);
-// int				init_mutex(t_data *data);
-
+int			init_data(t_data *data, int argc, char **argv);
+int			init_mutex(t_data *data);
+int			check_died(t_data *data);
+int			check_win(t_data *data);
+void		smart_sleep(long int time, t_data *data);
+int			is_reached_max_eat(t_philo *philo);
+void		win_checker(t_data *data);
+void		death_checker(t_data *data);
 
 #endif

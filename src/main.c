@@ -6,36 +6,40 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:10:15 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/02 13:56:34 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:57:29 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../innclude/philo.h"
+#include "../include/philo.h"
 
 static int	check_arg(char **arg)
 {
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 1;
 	while (arg[i])
 	{
+		if (!arg[i][0])
+			return (EXIT_FAILURE);
 		j = 0;
 		while (arg[i][j])
 		{
-			if (!ft_isdigit(arg[i][j]))
-				return (0);
+			if (!(arg[i][j] >= '0' && arg[i][j] <= '9'))
+				return (EXIT_FAILURE);
 			j++;
 		}
 		i++;
 	}
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
-void	free_mutex(t_data *data)
+static void	free_mutex(t_data *data, int var)
 {
 	int	i;
 
+	if (var == -1)
+		init_mutex(data);
 	i = -1;
 	while (++i < data->philo_count)
 		pthread_mutex_destroy(&data->fork[i].mutex);
@@ -49,17 +53,17 @@ void	free_mutex(t_data *data)
 	free(data->fork);
 }
 
-void	wait_threads(t_data *data)
+static void	wait_threads(t_data *data)
 {
 	int	i;
 
 	i = -1;
 	while (++i < data->philo_count)
 		pthread_join(data->philo[i].thread, NULL);
-	free_mutex(data);
+	free_mutex(data, 0);
 }
 
-void	start_thread(t_data *data)
+static void	start_thread(t_data *data)
 {
 	int		i;
 	void	*func;
@@ -73,8 +77,14 @@ void	start_thread(t_data *data)
 	while (++i < data->philo_count)
 	{
 		data->philo[i].last_meal = data->start_time;
-		pthread_create(&data->philo[i].thread, NULL, func, &data->philo[i]);
+		if (pthread_create(&data->philo[i].thread, NULL, \
+		func, &data->philo[i]) != 0)
+		{
+			free_mutex(data, 0);
+			exit(print_error("Error: Failed to create thread.", EXIT_FAILURE));
+		}
 	}
+
 	if (func == thread)
 		death_checker(data);
 }
@@ -85,16 +95,13 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc < MIN_ARGS || argc > MAX_ARGS)
-		return (print_error("Error: Argument error.", 1));
-	if (cehck_arg(argv) == 1)
-		return (print_error("Error: Argument error.", 1));
+		return (print_error("Error: Argument error.", EXIT_FAILURE));
+	if (check_arg(argv) == EXIT_FAILURE)
+		return (print_error("Error: Argument error.", EXIT_FAILURE));
 	i = init_data(&data, argc, argv);
 	if (i == 0 || i == -1)
-	{
-		free_mutex(&data, i);
-		return (0);
-	}
+		return (free_mutex(&data, i), EXIT_FAILURE);
 	start_thread(&data);
 	wait_threads(&data);
-	return (0);
+	return (EXIT_SUCCESS);
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_2.c                                          :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:39:56 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/02 14:40:20 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/03 14:57:48 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../innclude/philo.h"
+#include "../include/philo.h"
 
 void	death_checker(t_data *data)
 {
@@ -41,16 +41,6 @@ void	death_checker(t_data *data)
 	}
 }
 
-void	print(t_data *data, int id, char *str)
-{
-	pthread_mutex_lock(&data->m_write);
-	if (!check_died(data) && !check_win(data))
-	{
-		printf("%ld ms %d %s\n", get_time() - data->start_time, id, str);
-	}
-	pthread_mutex_unlock(&data->m_write);
-}
-
 int	check_died(t_data *data)
 {
 	pthread_mutex_lock(&data->m_dead);
@@ -72,12 +62,12 @@ int	check_win(t_data *data)
 	if (data->win)
 	{
 		pthread_mutex_unlock(&data->m_win);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	else
 	{
 		pthread_mutex_unlock(&data->m_win);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 }
 
@@ -100,8 +90,8 @@ int	is_reached_max_eat(t_philo *philo)
 	if (philo->times_eat >= philo->data->max_eat)
 	{
 		pthread_mutex_unlock(&philo->data->m_t_eat);
-		return (1);
+		return (EXIT_FAILURE);
 	}
 	pthread_mutex_unlock(&philo->data->m_t_eat);
-	return (0);
+	return (EXIT_SUCCESS);
 }

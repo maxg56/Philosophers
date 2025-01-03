@@ -1,0 +1,7 @@
+/obj
+.vscode 
+.compiled_count
+*.o
+*.out
+libft.a
+philo
