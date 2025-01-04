@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:59:10 by maxence           #+#    #+#             */
-/*   Updated: 2025/01/03 15:04:47 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:59:55 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 # define MIN_ARGS 5
 # define MAX_ARGS 6
 # define UNLIMITED_MEALS -1
-
+# define USLEEP_INTERVAL 100
+# define PHILO_DELAY 1500
 
 typedef struct s_fork
 {
@@ -80,8 +81,8 @@ int			init_mutex(t_data *data);
 int			check_died(t_data *data);
 int			check_win(t_data *data);
 void		smart_sleep(long int time, t_data *data);
-int			is_reached_max_eat(t_philo *philo);
-void		win_checker(t_data *data);
+int			win_checker(t_data *data, int update_win);
+
 void		death_checker(t_data *data);
 
 #endif

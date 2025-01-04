@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:10:15 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/03 14:57:29 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:47:41 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ static void	start_thread(t_data *data)
 			exit(print_error("Error: Failed to create thread.", EXIT_FAILURE));
 		}
 	}
-
 	if (func == thread)
 		death_checker(data);
 }

@@ -6,7 +6,7 @@
 #    By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 15:53:44 by mgendrot          #+#    #+#              #
-#    Updated: 2025/01/03 14:56:53 by mgendrot         ###   ########.fr        #
+#    Updated: 2025/01/04 14:03:01 by mgendrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCLUDE     = include/philo.h
 
 TMP 	   = .tmp/
 CC          = cc 
-CFLAGS      = -Wall -Wextra -Werror -pthread
+CFLAGS      = -Wall -Wextra -Werror -pthread -O3
 
 RM          = rm -f
 MKDIR       = mkdir
@@ -45,7 +45,7 @@ TERM_CLEAR_LINE     =   \033[2K\r
 #                                   Sources                                    #
 # **************************************************************************** #
 
-SRC_FILES       =   philo utils main  init utils2
+SRC_FILES       =   philo utils main  init win
 
 SRC_DIR         = src/
 
@@ -114,14 +114,6 @@ clean:
 	fi
 	
 fclean: clean
-	@if [ -e $(LIBFT) ]; then \
-		printf "$(YELLOW)Removing \"%s\"...\n$(DEF_COLOR)" $(LIBFT);\
-		$(RM) $(LIBFT);\
-	fi
-	@if [ -e $(LIBFT_INC_H) ]; then \
-		printf "$(YELLOW)Removing \"%s\"...\n$(DEF_COLOR)" $(INC_DIR)/$(LIBFT_INC_H); \
-		$(RM) $(LIBFT_INC_H);\
-	fi
 	@if [ -e $(NAME) ]; then \
 		printf "$(YELLOW)Removing \"%s\"...\n$(DEF_COLOR)" $(NAME);\
 		$(RM) -r $(NAME);\

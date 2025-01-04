@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:35:03 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/03 14:57:38 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/04 13:47:56 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,19 @@ static int	take_fork(t_philo *philo, t_fork *fork)
 
 void	eat(t_philo *philo)
 {
-	while (1)
+	if (!win_checker(philo->data, 0))
+		return ;
+	if (check_died(philo->data))
+		return ;
+	while (!take_fork(philo, &philo->data->fork[philo->left]))
+		usleep(USLEEP_INTERVAL);
+	while (!take_fork(philo, &philo->data->fork[philo->right]))
+		usleep(USLEEP_INTERVAL);
+	if (!win_checker(philo->data, 0))
 	{
-		if (take_fork(philo, &philo->data->fork[philo->left]))
-			break ;
-		usleep(100);
-	}
-	while (1)
-	{
-		if (take_fork(philo, &philo->data->fork[philo->right]))
-			break ;
-		usleep(100);
+		release_fork(&philo->data->fork[philo->left]);
+		release_fork(&philo->data->fork[philo->right]);
+		return ;
 	}
 	pthread_mutex_lock(&philo->data->m_meal);
 	print(philo->data, philo->id, "is eating.");
@@ -79,12 +81,12 @@ void	*thread(void *var)
 
 	philo = (t_philo *)var;
 	if (philo->id % 2 == 0)
-		usleep(1500);
+		usleep(PHILO_DELAY);
 	while (!check_died(philo->data))
 	{
-		eat(philo);
 		if (check_win(philo->data))
 			break ;
+		eat(philo);
 		print(philo->data, philo->id, "is sleeping.");
 		smart_sleep(philo->data->sleep_time, philo->data);
 		print(philo->data, philo->id, "is thinking.");
