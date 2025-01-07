@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:10:09 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/04 14:00:25 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/07 12:49:56 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	print_error(char *str, int i)
 {
 	write(2, RED, ft_strlen(RED));
 	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
 	write(2, DEF_COLOR, ft_strlen(DEF_COLOR));
 	return (i);
 }
