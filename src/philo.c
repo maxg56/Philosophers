@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/02 14:35:03 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/04 13:47:56 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/07 14:51:26 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	*thread_1(void *var)
 
 	philo = (t_philo *)var;
 	print(philo->data, philo->id, "has taken a fork.");
-	usleep(philo->data->die_time * 1000);
+	usleep(philo->data->die_time * PHILO_DELAY_1);
 	print(philo->data, philo->id, "died.");
 	return (NULL);
 }
