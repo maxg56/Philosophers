@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:59:10 by maxence           #+#    #+#             */
-/*   Updated: 2025/01/07 14:51:04 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:03:48 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 # define RED "\033[0;31m"
 # define DEF_COLOR "\033[0m"
-# define PHILO_MAX 300
+# define PHILO_MAX 200
 
 # define MIN_ARGS 5
 # define MAX_ARGS 6

@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:10:15 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/07 12:58:19 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:16:30 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	main(int argc, char **argv)
 		return (print_error("Error: Argument error.", EXIT_FAILURE));
 	i = init_data(&data, argc, argv);
 	if (i == 0 || i == -1)
-		return (free_mutex(&data, i), EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	start_thread(&data);
 	wait_threads(&data);
 	return (EXIT_SUCCESS);
