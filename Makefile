@@ -6,7 +6,7 @@
 #    By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/19 15:53:44 by mgendrot          #+#    #+#              #
-#    Updated: 2025/01/04 14:03:01 by mgendrot         ###   ########.fr        #
+#    Updated: 2025/01/07 15:29:26 by mgendrot         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCLUDE     = include/philo.h
 
 TMP 	   = .tmp/
 CC          = cc 
-CFLAGS      = -Wall -Wextra -Werror -pthread -O3
+CFLAGS      = -Wall -Wextra -Werror -pthread -O3 -fsanitize=address
 
 RM          = rm -f
 MKDIR       = mkdir

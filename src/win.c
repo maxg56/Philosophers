@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/04 13:32:13 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/04 14:00:14 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:27:18 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	death_checker(t_data *data)
 				pthread_mutex_unlock(&data->m_dead);
 				pthread_mutex_lock(&data->m_write);
 				printf("%ld %d %s\n", get_time() - data->start_time,
-					data->philo[i].id, "died.");
+					data->philo[i].id, "died");
 				pthread_mutex_unlock(&data->m_write);
 			}
 			pthread_mutex_unlock(&data->m_meal);

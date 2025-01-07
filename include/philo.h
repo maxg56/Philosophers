@@ -6,7 +6,7 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/27 14:59:10 by maxence           #+#    #+#             */
-/*   Updated: 2025/01/07 15:03:48 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:12:34 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ void		smart_sleep(long int time, t_data *data);
 int			win_checker(t_data *data, int update_win);
 
 void		death_checker(t_data *data);
+int			ft_strlen(char *str);
 
 #endif

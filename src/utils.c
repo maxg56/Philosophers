@@ -6,13 +6,13 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:10:09 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/07 12:49:56 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/07 15:44:10 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static int	ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
 	int	i;
 
@@ -44,7 +44,7 @@ void	print(t_data *data, int id, char *str)
 	pthread_mutex_lock(&data->m_write);
 	if (!check_died(data) && !check_win(data))
 	{
-		printf("%ld ms %d %s\n", get_time() - data->start_time, id, str);
+		printf("%ld %d %s\n", get_time() - data->start_time, id, str);
 	}
 	pthread_mutex_unlock(&data->m_write);
 }

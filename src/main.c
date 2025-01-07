@@ -6,29 +6,36 @@
 /*   By: mgendrot <mgendrot@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 13:10:15 by mgendrot          #+#    #+#             */
-/*   Updated: 2025/01/07 15:16:30 by mgendrot         ###   ########.fr       */
+/*   Updated: 2025/01/07 17:11:50 by mgendrot         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static int	check_arg(char **arg)
+static int	check_arg(char **argv)
 {
 	int	i;
 	int	j;
+	int	len;
 
 	i = 1;
-	while (arg[i])
+	while (argv[i])
 	{
-		if (!arg[i][0])
+		if (!argv[i][0])
 			return (EXIT_FAILURE);
 		j = 0;
-		while (arg[i][j])
+		if (argv[i][0] == '+' || argv[i][0] == '-')
+			j++;
+		len = ft_strlen(argv[i]);
+		while (argv[i][j])
 		{
-			if (!(arg[i][j] >= '0' && arg[i][j] <= '9'))
+			if (!(argv[i][j] >= '0' && argv[i][j] <= '9'))
 				return (EXIT_FAILURE);
 			j++;
 		}
+		while (--len >= 10 && argv[i][len] == '0')
+			if (argv[i][len - 1] != '0')
+				return (EXIT_FAILURE);
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -93,9 +100,8 @@ int	main(int argc, char **argv)
 	int		i;
 	t_data	data;
 
-	if (argc < MIN_ARGS || argc > MAX_ARGS)
-		return (print_error("Error: Argument error.", EXIT_FAILURE));
-	if (check_arg(argv) == EXIT_FAILURE)
+	if ((argc < MIN_ARGS || argc > MAX_ARGS)
+		|| check_arg(argv) == EXIT_FAILURE)
 		return (print_error("Error: Argument error.", EXIT_FAILURE));
 	i = init_data(&data, argc, argv);
 	if (i == 0 || i == -1)
